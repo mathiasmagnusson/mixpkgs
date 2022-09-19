@@ -27,6 +27,8 @@ stdenv.mkDerivation {
 
   installPhase = ''
     $src --target "$out"
+
+    cat < ${./README.md} > "$out/README.md"
   '';
 
   postFixup = ''

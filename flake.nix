@@ -9,7 +9,7 @@
   {
     packages.${system} = {
       mars = import ./mars.nix pkgs;
-      mcb32tools = import ./mcb32tools.nix pkgs;
+      mcb32tools = import ./mcb32tools pkgs;
     };
   };
 }
