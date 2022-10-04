@@ -11,5 +11,8 @@
       mars = import ./mars.nix pkgs;
       mcb32tools = import ./mcb32tools pkgs;
     };
+    devShells.${system} = {
+      mcb32tools = import ./mcb32tools/shell.nix pkgs;
+    };
   };
 }
