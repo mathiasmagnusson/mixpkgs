@@ -10,6 +10,7 @@
     packages.${system} = {
       mars = import ./mars.nix pkgs;
       mcb32tools = import ./mcb32tools pkgs;
+      binary-ninja = import ./binary-ninja.nix pkgs;
     };
     devShells.${system} = {
       mcb32tools = import ./mcb32tools/shell.nix pkgs;
