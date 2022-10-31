@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   ];
   src = fetchurl {
     url = "https://cdn.binary.ninja/installers/BinaryNinja-demo.zip";
-    sha256 = "sha256-dFUQg+8AUD2md/nFsnsK3/Sxl+7gcqE79gVQIixvxpg=";
+    sha256 = "sha256-TQSzrXb7vKU22tS/HAHv+QJC/HptMDGdOnadKPu/l+0=";
   };
 
   buildPhase = ":";
