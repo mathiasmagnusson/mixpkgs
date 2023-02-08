@@ -1,29 +1,17 @@
-{ pkgs ? import <nixpkgs> {}, ... }:
-
-with pkgs;
-
-stdenv.mkDerivation rec {
-  name = "binary-ninja-demo";
-  buildInputs = [
-    autoPatchelfHook makeWrapper unzip stdenv.cc.cc.lib dbus
-    libGL glib fontconfig xorg.libXi xorg.libXrender
-
-    libxkbcommon xorg.xcbutilwm xorg.xcbutilimage xorg.xcbutilkeysyms
-    xorg.xcbutilrenderutil
-  ];
-  src = fetchurl {
+{ fetchzip, buildFHSUserEnv, ... }:
+let
+  binary-ninja = fetchzip {
     url = "https://cdn.binary.ninja/installers/BinaryNinja-demo.zip";
-    sha256 = "sha256-TQSzrXb7vKU22tS/HAHv+QJC/HptMDGdOnadKPu/l+0=";
+    hash = "sha256-Kor1pRAgGAwG1moz7tstEuDXhX8qHkX69mCE6jWyaxI=";
   };
-
-  buildPhase = ":";
-  installPhase = ''
-    mkdir -p $out/bin
-    mkdir -p $out/opt
-    cp -r * $out/opt
-    chmod +x $out/opt/binaryninja
-    makeWrapper $out/opt/binaryninja \
-        $out/bin/binaryninja \
-        --prefix "QT_XKB_CONFIG_ROOT" ":" "${xkeyboard_config}/share/X11/xkb"
-  '';
+in
+buildFHSUserEnv {
+  name = "binary-ninja";
+  runScript = "${binary-ninja}/binaryninja";
+  targetPkgs = pkgs:
+  with pkgs; [
+    libGL fontconfig xorg.libX11 xorg.libxcb
+    libxkbcommon freetype qt6.qtbase
+    zlib dbus
+  ];
 }
