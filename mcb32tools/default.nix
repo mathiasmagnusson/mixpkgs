@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, autoPatchelfHook, zlib, libusb1, libftdi, ... }:
+{ stdenv, fetchurl, autoPatchelfHook, zlib, libusb1, libftdi, bash, gnumake, ... }:
 
 let
   version = "2.2";
@@ -15,6 +15,8 @@ stdenv.mkDerivation {
   };
 
   buildInputs = [
+    bash
+    gnumake
     zlib
     libusb1
     libftdi
@@ -29,10 +31,19 @@ stdenv.mkDerivation {
     $src --target "$out"
 
     cat < ${./README.md} > "$out/README.md"
+
+    cat > "$out/bin/mcb32tools" <<EOF
+    #!${bash}/bin/bash
+    export PATH=${gnumake}/bin:\$PATH
+    . $out/environment
+    bash --rcfile <(echo 'PS1="[\033[31mmcb32tools\033[0m] \$PS1"')
+    EOF
+    chmod +x "$out/bin/mcb32tools"
   '';
 
   postFixup = ''
     escaped_out=$(echo "$out" | sed 's/\//\\\//g')
     sed -i "s/\/opt\/mcb32tools/$escaped_out/" $out/environment
+    sed -i -E "/tput|PS1/d" $out/environment
   '';
 }
