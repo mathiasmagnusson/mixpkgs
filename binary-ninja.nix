@@ -2,7 +2,7 @@
 let
   binary-ninja = fetchzip {
     url = "https://cdn.binary.ninja/installers/BinaryNinja-demo.zip";
-    hash = "sha256-Kor1pRAgGAwG1moz7tstEuDXhX8qHkX69mCE6jWyaxI=";
+    hash = "sha256-SGMVj+LR1bsSK+0Yeh1JXEokTHQl580n1M0IuMmE2xk=";
   };
 in
 buildFHSUserEnv {
