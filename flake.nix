@@ -1,6 +1,10 @@
 {
   description = "A collection of some packages i've gotten to run with nix";
 
+  inputs = {
+    nixpkgs.url = github:nixos/nixpkgs/nixos-22.11;
+  };
+
   outputs = { self, nixpkgs }:
   let
     system = "x86_64-linux";
